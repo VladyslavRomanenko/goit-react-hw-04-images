@@ -1,6 +1,6 @@
 import css from './Searchbar.module.css';
 import iconSearch from '../../images/icons.svg';
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 export const Searchbar = ({ onSubmitValue }) => {
   const [value, setValue] = useState('');
