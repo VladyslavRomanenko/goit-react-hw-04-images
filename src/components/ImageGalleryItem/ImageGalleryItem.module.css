@@ -1,0 +1,18 @@
+/* .galleryItem {
+  display: block;
+  width: 400;
+  height: 300;
+} */
+
+.galleryItemImage {
+  width: 320px;
+  height: 220px;
+  cursor: zoom-in;
+  transition: transform 200ms linear, box-shadow 200ms linear;
+}
+
+.galleryItemImage:hover,
+.galleryItemImage:focus {
+  transform: translateY(-3px);
+  box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.419);
+}
