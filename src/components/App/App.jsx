@@ -13,21 +13,20 @@ export const App = () => {
   const [showBtn, setShowBtn] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const data = await getGallery(value, page);
+        setPhotos(prevPhotos => [...prevPhotos, ...data.hits]);
+        setShowBtn(page < Math.ceil(data.totalHits / 12));
+      } catch (error) {
+        console.error('Error fetching data', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, [page, value]);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const data = await getGallery(value, page);
-      setPhotos(prevPhotos => [...prevPhotos, ...data.hits]);
-      setShowBtn(page < Math.ceil(data.totalHits / 12));
-    } catch (error) {
-      console.error('Error fetching data', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const onSubmitQuery = value => {
     setValue(value);
