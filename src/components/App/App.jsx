@@ -14,7 +14,7 @@ export const App = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page, value]);
+  }, [page, value, fetchData]);
 
   const fetchData = async () => {
     setLoading(true);
