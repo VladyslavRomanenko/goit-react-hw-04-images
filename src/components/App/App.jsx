@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button } from 'components/Button/Button';
 import { getGallery } from 'service/api';
 import { Loader } from 'components/Loader/Loader';
+import { useCallback } from 'react';
 
 export const App = () => {
   const [value, setValue] = useState('');
@@ -12,21 +13,22 @@ export const App = () => {
   const [loading, setLoading] = useState(false);
   const [showBtn, setShowBtn] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const data = await getGallery(value, page);
-        setPhotos(prevPhotos => [...prevPhotos, ...data.hits]);
-        setShowBtn(page < Math.ceil(data.totalHits / 12));
-      } catch (error) {
-        console.error('Error fetching data', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await getGallery(value, page);
+      setPhotos(prevPhotos => [...prevPhotos, ...data.hits]);
+      setShowBtn(page < Math.ceil(data.totalHits / 12));
+    } catch (error) {
+      console.error('Error fetching data', error);
+    } finally {
+      setLoading(false);
+    }
   }, [page, value]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const onSubmitQuery = value => {
     setValue(value);
